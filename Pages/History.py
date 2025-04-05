@@ -5,8 +5,8 @@ import plotly.express as px
 
 st.title("My Expense History")
 
-if os.path.exists("/Users/eugenechurylov/PycharmProjects/Expense Tracker/expenses.csv"):
-    df = pd.read_csv("/Users/eugenechurylov/PycharmProjects/Expense Tracker/expenses.csv")
+if os.path.exists("/expenses.csv"):
+    df = pd.read_csv("/expenses.csv")
 
     categories = df["Category"].unique()
     selected_category = st.selectbox("Filter by Category", options=["All"] + list(categories))
