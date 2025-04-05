@@ -42,21 +42,35 @@ if os.path.exists(filename):
     header4.markdown("**Amount**")
     header5.markdown(" ")  # blank for delete column
 
+    layout_mode = st.radio("View mode", ["🖥️ Desktop", "📱 Mobile"], horizontal=True)
+
     for index, row in df.iterrows():
-        with st.container():
-            st.markdown("---")  # separator line
-
-            st.markdown(f"**📅 Date:** {row['Date']}")
-            st.markdown(f"**🏷️ Category:** {row['Category']}")
-            st.markdown(f"**📝 Description:** {row['Description']}")
-            st.markdown(f"**💶 Amount:** €{row['Amount']:.2f}")
-
-            if st.button("🗑️ Delete", key=f"delete_{index}"):
+        if layout_mode == "Desktop":
+            col1, col2, col3, col4, col5 = st.columns([2, 2, 3, 2, 1])
+            col1.write(row["Date"])
+            col2.write(row["Category"])
+            col3.write(row["Description"])
+            col4.write(f"€{row['Amount']:.2f}")
+            if col5.button("🗑️", key=f"delete_{index}"):
                 df = df.drop(index)
                 df.reset_index(drop=True, inplace=True)
                 df.to_csv("expenses.csv", index=False)
                 st.success("Deleted!")
                 st.rerun()
+
+        else:  # Mobile layout
+            with st.container():
+                st.markdown("---")
+                st.markdown(f"**📅 Date:** {row['Date']}")
+                st.markdown(f"**🏷️ Category:** {row['Category']}")
+                st.markdown(f"**📝 Description:** {row['Description']}")
+                st.markdown(f"**💶 Amount:** €{row['Amount']:.2f}")
+                if st.button("🗑️ Delete", key=f"delete_{index}"):
+                    df = df.drop(index)
+                    df.reset_index(drop=True, inplace=True)
+                    df.to_csv("expenses.csv", index=False)
+                    st.success("Deleted!")
+                    st.rerun()
 
     total_spent = df["Amount"].sum()
     st.markdown(
