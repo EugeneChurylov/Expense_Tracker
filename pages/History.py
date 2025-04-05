@@ -38,15 +38,16 @@ if os.path.exists(filename):
     st.subheader("📋 All Expenses")
 
     # # Table headers
-    # header1, header2, header3, header4, header5 = st.columns([2, 2, 3, 2, 1])
-    # header1.markdown("**Date**")
-    # header2.markdown("**Category**")
-    # header3.markdown("**Description**")
-    # header4.markdown("**Amount**")
-    # header5.markdown(" ")  # blank for delete column
+    header1, header2, header3, header4, header5 = st.columns([2, 2, 3, 2, 1])
+    header1.markdown("**Date**")
+    header2.markdown("**Category**")
+    header3.markdown("**Description**")
+    header4.markdown("**Amount**")
+    header5.markdown(" ")  # blank for delete column
 
     for index, row in df.iterrows():
-        if layout_mode == "Desktop":
+        if layout_mode == "🖥️ Desktop":
+            # DESKTOP TABLE ROWS
             col1, col2, col3, col4, col5 = st.columns([2, 2, 3, 2, 1])
             col1.write(row["Date"])
             col2.write(row["Category"])
@@ -59,13 +60,13 @@ if os.path.exists(filename):
                 st.success("Deleted!")
                 st.rerun()
 
-        else:  # Mobile layout
+        else:  # 📱 MOBILE
             with st.container():
                 st.markdown("---")
-                st.markdown(f"**📅 Date:** {row['Date']}")
-                st.markdown(f"**🏷️ Category:** {row['Category']}")
-                st.markdown(f"**📝 Description:** {row['Description']}")
-                st.markdown(f"**💶 Amount:** €{row['Amount']:.2f}")
+                st.markdown(f"📅 **Date:** {row['Date']}")
+                st.markdown(f"🏷️ **Category:** {row['Category']}")
+                st.markdown(f"📝 **Description:** {row['Description']}")
+                st.markdown(f"💶 **Amount:** €{row['Amount']:.2f}")
                 if st.button("🗑️ Delete", key=f"delete_{index}"):
                     df = df.drop(index)
                     df.reset_index(drop=True, inplace=True)
