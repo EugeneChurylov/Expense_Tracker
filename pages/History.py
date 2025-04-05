@@ -5,6 +5,9 @@ import plotly.express as px
 
 st.title("My Expense History")
 
+# Radio button to toggle between desktop and mobile view
+layout_mode = st.radio("View mode", ["🖥️ Desktop", "📱 Mobile"], horizontal=True)
+
 filename = "expenses.csv"
 
 if os.path.exists(filename):
@@ -41,8 +44,6 @@ if os.path.exists(filename):
     header3.markdown("**Description**")
     header4.markdown("**Amount**")
     header5.markdown(" ")  # blank for delete column
-
-    layout_mode = st.radio("View mode", ["🖥️ Desktop", "📱 Mobile"], horizontal=True)
 
     for index, row in df.iterrows():
         if layout_mode == "Desktop":
