@@ -5,9 +5,6 @@ import plotly.express as px
 
 st.title("My Expense History")
 
-# Radio button to toggle between desktop and mobile view
-layout_mode = st.radio("View mode", ["🖥️ Desktop", "📱 Mobile"], horizontal=True)
-
 filename = "expenses.csv"
 
 if os.path.exists(filename):
@@ -34,6 +31,9 @@ if os.path.exists(filename):
 
     # 4. Format Date column as string for display
     df["Date"] = df["Date"].dt.strftime("%Y-%m-%d")
+
+    # Radio button to toggle between desktop and mobile view
+    layout_mode = st.radio("View mode", ["🖥️ Desktop", "📱 Mobile"], horizontal=True)
 
     st.subheader("📋 All Expenses")
 
