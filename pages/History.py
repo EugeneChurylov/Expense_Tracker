@@ -5,8 +5,10 @@ import plotly.express as px
 
 st.title("My Expense History")
 
-if os.path.exists("/expenses.csv"):
-    df = pd.read_csv("/expenses.csv")
+filename = "expenses.csv"
+
+if os.path.exists(filename):
+    df = pd.read_csv(filename)
 
     categories = df["Category"].unique()
     selected_category = st.selectbox("Filter by Category", options=["All"] + list(categories))
@@ -47,7 +49,7 @@ if os.path.exists("/expenses.csv"):
         if col5.button("🗑️", key=f"delete_{index}"):
             df = df.drop(index)
             df.reset_index(drop=True, inplace=True)
-            df.to_csv("expenses.csv", index=False)
+            df.to_csv(filename, index=False)
             st.success("Deleted!")
             st.rerun()  # Refresh the page to update the UI
 
