@@ -43,19 +43,20 @@ if os.path.exists(filename):
     header5.markdown(" ")  # blank for delete column
 
     for index, row in df.iterrows():
-        col1, col2, col3, col4, col5 = st.columns([2, 2, 3, 2, 1])
+        with st.container():
+            st.markdown("---")  # separator line
 
-        col1.write(row["Date"])
-        col2.write(row["Category"])
-        col3.write(row["Description"])
-        col4.write(f"€{row['Amount']:.2f}")
+            st.markdown(f"**📅 Date:** {row['Date']}")
+            st.markdown(f"**🏷️ Category:** {row['Category']}")
+            st.markdown(f"**📝 Description:** {row['Description']}")
+            st.markdown(f"**💶 Amount:** €{row['Amount']:.2f}")
 
-        if col5.button("🗑️", key=f"delete_{index}"):
-            df = df.drop(index)
-            df.reset_index(drop=True, inplace=True)
-            df.to_csv(filename, index=False)
-            st.success("Deleted!")
-            st.rerun()  # Refresh the page to update the UI
+            if st.button("🗑️ Delete", key=f"delete_{index}"):
+                df = df.drop(index)
+                df.reset_index(drop=True, inplace=True)
+                df.to_csv("expenses.csv", index=False)
+                st.success("Deleted!")
+                st.rerun()
 
     total_spent = df["Amount"].sum()
     st.markdown(
