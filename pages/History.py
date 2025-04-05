@@ -38,12 +38,13 @@ if os.path.exists(filename):
     st.subheader("📋 All Expenses")
 
     # # Table headers
-    header1, header2, header3, header4, header5 = st.columns([2, 2, 3, 2, 1])
-    header1.markdown("**Date**")
-    header2.markdown("**Category**")
-    header3.markdown("**Description**")
-    header4.markdown("**Amount**")
-    header5.markdown(" ")  # blank for delete column
+    if layout_mode == "🖥️ Desktop":
+        header1, header2, header3, header4, header5 = st.columns([2, 2, 3, 2, 1])
+        header1.markdown("**Date**")
+        header2.markdown("**Category**")
+        header3.markdown("**Description**")
+        header4.markdown("**Amount**")
+        header5.markdown(" ")
 
     for index, row in df.iterrows():
         if layout_mode == "🖥️ Desktop":
