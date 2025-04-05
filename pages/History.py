@@ -10,6 +10,10 @@ filename = "expenses.csv"
 if os.path.exists(filename):
     df = pd.read_csv(filename)
 
+    if df.empty:
+        st.info("No expenses found yet.")
+        st.stop()
+
     categories = df["Category"].unique()
     selected_category = st.selectbox("Filter by Category", options=["All"] + list(categories))
     if selected_category != "All":
